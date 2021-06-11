@@ -8,8 +8,6 @@ RUN yes | \
 	ninja-build \
         wget \
         && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/* && \
     wget --no-check-certificate https://github.com/Kitware/CMake/releases/download/v3.20.3/cmake-3.20.3.tar.gz && \
         tar xvzf cmake-3.20.3.tar.gz && \
         cd cmake-3.20.3 && \
@@ -18,7 +16,12 @@ RUN yes | \
         cd .. && \
         rm -rf cmake-3.20.3* && \
     mkdir /usr/aarch64-linux-gnu/usr && \
-        ln -sf /usr/aarch64-linux-gnu /usr/aarch64-linux-gnu/usr/aarch64-linux-gnu
+        ln -sf /usr/aarch64-linux-gnu /usr/aarch64-linux-gnu/usr/aarch64-linux-gnu && \
+    dpkg --add-architecture arm64 && \
+        yes | apt update && \
+        apt -y install libstdc++-8-dev:arm64 && \
+    apt-get clean && \
+        rm -rf /var/lib/apt/lists/*
 
 ENV CMAKE_ROOT /opt/cmake
 ENV PATH ${PATH}:${CMAKE_ROOT}/bin

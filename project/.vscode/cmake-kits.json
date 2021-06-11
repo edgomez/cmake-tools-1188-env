@@ -1,0 +1,6 @@
+[
+    {
+      "name": "clang-aarch64",
+      "toolchainFile": "/project/toolchain-clang-aarch64-linux-gnu.cmake"
+    }
+]
